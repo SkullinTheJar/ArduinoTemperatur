@@ -1,3 +1,4 @@
+// Import libraries
 #include <Wire.h>
 #include "rgb_lcd.h"
 #include <math.h>
@@ -5,6 +6,7 @@
 rgb_lcd lcd;
 
 class ScreenState
+// This class holds the value of the temperature and can change the screens color and text
 {
   private:
     int colorR;
@@ -27,6 +29,7 @@ class ScreenState
   }
 
   void changedTo()
+  // Changes the displayed color and text
   {
     lcd.setRGB(colorR, colorG, colorB);
     lcd.setCursor(0, 0);
@@ -34,11 +37,13 @@ class ScreenState
   }
 
   void changeValue(int newValue)
+  // Maps the max- and min-values of the rotater to the max- and min-values of the temp-reader.
   {
     value = map(newValue, 0, 1023, maxTemp, minTemp);
   }
 
   void calcTemperature(int newValue)
+  // Calculates the temperature
   {
     const int B = 4275;
     const int R0 = 100000;
@@ -48,12 +53,14 @@ class ScreenState
   }
 
   void myDisplay()
+  // Prints the temperature
   {
     lcd.setCursor(0, 1);
-    lcd.print("" + String(value) + "     ");
+    lcd.print("" + String(value) + " C" + (char)223);
   }
 };
 
+// Initiates states and variables
 int currentState = 0;
 int maxStates = 3;
 bool buttonIsPressed = false;
@@ -88,8 +95,8 @@ void loop()
     int buttonRead = digitalRead(buttonPin);
     int rotatingStuffRead = analogRead(rotatingStuffPin);
     int tempRead = analogRead(tempPin);
-    
     if (buttonRead == 1 and !buttonIsPressed)
+    // If button is pressed, change the state
     {
       currentState = currentState + 1;
       if (currentState >= maxStates)
@@ -106,16 +113,19 @@ void loop()
       buttonIsPressed = false;
     }
     if (currentState == 1)
+    // If it is 1 set the min-temperature
     {
       screens[currentState].changeValue(rotatingStuffRead);
       myMinTempo = screens[currentState].value;
     }
     if (currentState == 2)
+    // If it is 2 set the max-temperature
     {
       screens[currentState].changeValue(rotatingStuffRead);
       myMaxTempo = screens[currentState].value;
     }
     if (currentState == 0)
+    // If it is 0 beep and change text if the temperature is too high or low
     {
       myMin = myMinTempo;
       myMax = myMaxTempo;
