@@ -63,9 +63,9 @@ int currentState = 0;
 int maxStates = 3;
 bool buttonIsPressed = false;
 ScreenState screens[3] = {
-    ScreenState("Temperaturen er:", 0, 255, 0, 0),
-    ScreenState("Indstil min:    ", 0, 0, 255, 1),
-    ScreenState("Indstil max:    ", 255, 0, 0, 1),
+    ScreenState("Temperaturen er:", 0, 255, 0),
+    ScreenState("Indstil min:    ", 0, 0, 255),
+    ScreenState("Indstil max:    ", 255, 0, 0),
  };
 int buttonPin = 4;
 int rotatingStuffPin = A0;
