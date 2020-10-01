@@ -17,15 +17,13 @@ class ScreenState
   public:
     String firstRow;
     int value = 0;
-    int stateType;
     
-  ScreenState(String _firstRow, int _colorR, int _colorG, int _colorB, int _stateType) 
+  ScreenState(String _firstRow, int _colorR, int _colorG, int _colorB) 
   {
     firstRow = _firstRow;
     colorR = _colorR;
     colorG = _colorG;
     colorB = _colorB;
-    stateType = _stateType;
   }
 
   void changedTo()
