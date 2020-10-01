@@ -139,9 +139,6 @@ void loop()
       {
         screens[currentState].firstRow = "Temp for lav:   ";
         digitalWrite(6, HIGH);
-        delay(1000);
-        digitalWrite(6, LOW);
-        delay(1000);
       }
       else
       {
