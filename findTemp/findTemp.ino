@@ -7,13 +7,13 @@ rgb_lcd lcd;
 class ScreenState
 {
   private:
-    String firstRow;
     int colorR;
     int colorG;
     int colorB;
     int minTemp = -40;
     int maxTemp = 125;
   public:
+    String firstRow;
     int value = 0;
     int stateType;
     
@@ -57,12 +57,10 @@ class ScreenState
 int currentState = 0;
 int maxStates = 3;
 bool buttonIsPressed = false;
-ScreenState screens[5] = {
+ScreenState screens[3] = {
     ScreenState("Temperaturen er:", 0, 255, 0, 0),
     ScreenState("Indstil min:    ", 0, 0, 255, 1),
     ScreenState("Indstil max:    ", 255, 0, 0, 1),
-    ScreenState("Temp for lav:   ", 0, 0, 255, 2),
-    ScreenState("Temp for hoej:  ", 255, 0, 0, 2),
  };
 int buttonPin = 4;
 int rotatingStuffPin = A0;
@@ -124,16 +122,24 @@ void loop()
       screens[currentState].calcTemperature(tempRead);
       if (myMax < screens[currentState].value)
       {
+        screens[currentState].firstRow = "Temp for hoej:  ";
         digitalWrite(6, HIGH);
       }
       else if (myMin > screens[currentState].value)
       {
+        screens[currentState].firstRow = "Temp for lav:   ";
         digitalWrite(6, HIGH);
         delay(1000);
         digitalWrite(6, LOW);
         delay(1000);
       }
-    } 
+      else
+      {
+        screens[currentState].firstRow = "Temperaturen er:";
+        digitalWrite(6, LOW);
+      }
+      screens[currentState].changedTo();
+    }
     screens[currentState].myDisplay();
 
 }
