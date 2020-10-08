@@ -54,7 +54,7 @@ class ScreenState
   // Prints the temperature
   {
     lcd.setCursor(0, 1);
-    lcd.print("" + String(value) + " C" + (char)223);
+    lcd.print("" + String(value) + " C" + (char)223 + "      ");
   }
 };
 
@@ -115,12 +115,14 @@ void loop()
     {
       screens[currentState].changeValue(rotatingStuffRead);
       myMinTempo = screens[currentState].value;
+      digitalWrite(6, LOW);
     }
     if (currentState == 2)
     // If it is 2 set the max-temperature
     {
       screens[currentState].changeValue(rotatingStuffRead);
       myMaxTempo = screens[currentState].value;
+      digitalWrite(6, LOW);
     }
     if (currentState == 0)
     // If it is 0 beep and change text if the temperature is too high or low
